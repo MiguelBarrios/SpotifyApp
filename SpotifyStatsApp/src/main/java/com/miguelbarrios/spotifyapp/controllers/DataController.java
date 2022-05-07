@@ -9,6 +9,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.miguelbarrios.spotifyapp.MusicStats;
+import com.miguelbarrios.spotifyapp.entities.Album;
+import com.miguelbarrios.spotifyapp.entities.Show;
 import com.miguelbarrios.spotifyapp.entities.StreamingRecord;
 import com.miguelbarrios.spotifyapp.entities.Track;
 import com.miguelbarrios.spotifyapp.utilities.Utilities;
@@ -29,68 +32,19 @@ public class DataController {
 	}
 	
 	@GetMapping("dataupload")
-	public String dataupload(@RequestBody Map<String, List<Object>> map) {
+	public Map<String, Integer> dataupload(@RequestBody Map<String, List<Object>> map) {
 		
 		ObjectMapper mapper = new ObjectMapper();
-		
-		
+	
 		List<Track> tracks =  Utilities.convert(Track.class, map.get("tracks"), mapper);
+		List<Album> albums =  Utilities.convert(Album.class, map.get("albums"), mapper);
+		List<Show> shows = Utilities.convert(Show.class, map.get("shows"), mapper);
 		
+		MusicStats stats = new MusicStats(tracks, albums, shows);
+		Map<String, Integer> numSongs = stats.mostSongsByArtist();
 		
-		tracks.forEach(System.out::println);
-		
-//		//TODO: temporary workaround, come back and figure out how do with DI
-//		List<String> tracksJson = Utilities.toJson(map.get("tracks"), mapper);
-//		List<String> albumsJson = Utilities.toJson(map.get("albums"), mapper);
-//
-//		ObjectMapper objectMapper = new ObjectMapper();
-//		
-//		List<Track> tracks = tracksJson.stream().map((n) -> {
-//			try {
-//				return objectMapper.readValue(n, Track.class);
-//			} catch (Exception e) {
-//				e.printStackTrace();
-//			} 
-//			return null;
-//		}).collect(Collectors.toList());
-//		
-//		tracks.forEach(System.out::println);
 
-		return "success";
+		return numSongs;
 	}
 	
-
-	
-	@GetMapping("libraryupload")
-	public String libraryUpload(@RequestBody Map<String, List<Object>>  map) {
-		
-		for(String key : map.keySet()) {
-			System.out.println(key);
-		}
-		
-		List<Object> objects = map.get("tracks");
-		objects.forEach(System.out::println);
-		System.out.println(objects.size());
-		
-
-		
-//		String json = map.get("tracks").toString();
-//		System.out.println(json);
-//		System.out.println("json: " + json);
-//		ObjectMapper objectMapper = new ObjectMapper();
-//		objectMapper.configure(JsonParser.Feature.ALLOW_UNQUOTED_FIELD_NAMES, true);
-//
-//		try {
-//			Track[] tracks = objectMapper.readValue(json, Track[].class);
-//			System.out.println(tracks.length);
-//			
-//		} catch (Exception e) {
-//			// TODO Auto-generated catch block
-//			e.printStackTrace();
-//		}
-		
-		
-		
-		return "success";
-	}
 }

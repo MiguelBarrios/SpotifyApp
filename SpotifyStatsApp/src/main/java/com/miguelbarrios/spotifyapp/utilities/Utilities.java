@@ -9,30 +9,10 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 public class Utilities {
 
-	public static List<String> toJson(List<Object> list, ObjectMapper mapper){
-	
-		return list.stream().map((n) -> {
-			try {
-				return mapper.writeValueAsString(n);
-			} catch (JsonProcessingException e1) 
-			{ 
-				e1.printStackTrace(); 
-			}
-			return "";
-		}).collect(Collectors.toList());
+
+	public static void proccessData() {
+		
 	}
-	
-//	public static <T> void fetchObjectList(Class<T> classType) {
-//		List<Track> tracks = tracksJson.stream().map((n) -> {
-//			try {
-//				return objectMapper.readValue(n, Track.class);
-//			} catch (Exception e) {
-//				e.printStackTrace();
-//			} 
-//			return null;
-//		}).collect(Collectors.toList());
-//		   
-//	}
 	
 	public static <T> List<T> convert(Class<T> classType, List<Object> list, ObjectMapper mapper) {
 				
