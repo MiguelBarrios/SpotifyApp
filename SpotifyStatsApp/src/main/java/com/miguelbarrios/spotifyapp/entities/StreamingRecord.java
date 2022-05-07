@@ -1,4 +1,4 @@
-package com.miguelbarrios.entities;
+package com.miguelbarrios.spotifyapp.entities;
 
 import java.time.LocalDateTime;
 
