@@ -34,14 +34,10 @@ public class DataController {
 	@GetMapping("uploadstreaminghistory")
 	public StreamingHistory upload(@RequestBody List<StreamingRecord> records) {
 		
-		return historyService.findById(1);
+		historyService.uploadStreamingHistory(records);
+		return null;
 	}
 	
-	@GetMapping("streaminghistoryupload")
-	public List<StreamingRecord> streamingHistUpload(@RequestBody List<StreamingRecord> records) {
-		System.out.println(records);
-		return records;
-	}
 	
 	@GetMapping("dataupload")
 	public Map<String, Integer> dataupload(@RequestBody Map<String, List<Object>> map) {

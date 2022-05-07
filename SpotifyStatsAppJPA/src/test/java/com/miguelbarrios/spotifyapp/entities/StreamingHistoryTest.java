@@ -54,7 +54,7 @@ class StreamingHistoryTest {
 	@DisplayName("Test OTM mapping to Artist")
 	void test_relationship_to_artist() {
 		assertNotNull(record);
-		assertEquals("Mike Posner", record.getArtist().getName());
+		assertEquals("Mike Posner", record.getArtist().getArtistName());
 	}
 	
 	@Test

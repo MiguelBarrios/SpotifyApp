@@ -1,5 +1,6 @@
 package com.miguelbarrios.spotifyapp.entities;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 
@@ -7,22 +8,26 @@ import javax.persistence.Id;
 public class Artist {
 	
 	@Id
-	private String name;
+	@Column(name="name")
+	private String artistName;
 	
 	public Artist() {}
 
-	public String getName() {
-		return name;
+	public String getArtistName() {
+		return artistName;
 	}
 
-	public void setName(String name) {
-		this.name = name;
+	public void setArtistName(String artistName) {
+		this.artistName = artistName;
 	}
 
 	@Override
 	public String toString() {
-		return "Artist [name=" + name + "]";
+		return "Artist [artistName=" + artistName + "]";
 	}
+
+	
+	
 	
 	
 }

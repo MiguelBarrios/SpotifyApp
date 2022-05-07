@@ -12,6 +12,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonFormat;
 
 @Entity
 @Table(name="streaming_history")
@@ -21,6 +22,7 @@ public class StreamingHistory {
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private int id;
 	
+	@JsonFormat(shape=JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm")
 	@Column(name="end_time")
 	private LocalDateTime endTime;
 	
@@ -93,8 +95,10 @@ public class StreamingHistory {
 	@Override
 	public String toString() {
 		return "StreamingHistory [id=" + id + ", endTime=" + endTime + ", trackName=" + trackName + ", msPlayed="
-				+ msPlayed + "]";
+				+ msPlayed + ", artistName=" + artist + ", user=" + user + "]";
 	}
+
+
 	
 	
 }

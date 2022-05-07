@@ -4,15 +4,16 @@ import java.time.LocalDateTime;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 
-public class StreamingRecord { //2021-04-15 13:46
+public class StreamingRecord {
+	
 	@JsonFormat(shape=JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm")
 	private LocalDateTime endTime;
-	
-	private String artistName;
 	
 	private String trackName;
 	
 	private long msPlayed;
+	
+	private String artistName;
 	
 	public StreamingRecord() {}
 
@@ -22,14 +23,6 @@ public class StreamingRecord { //2021-04-15 13:46
 
 	public void setEndTime(LocalDateTime endTime) {
 		this.endTime = endTime;
-	}
-
-	public String getArtistName() {
-		return artistName;
-	}
-
-	public void setArtistName(String artistName) {
-		this.artistName = artistName;
 	}
 
 	public String getTrackName() {
@@ -48,20 +41,23 @@ public class StreamingRecord { //2021-04-15 13:46
 		this.msPlayed = msPlayed;
 	}
 
+
+
+	public String getArtistName() {
+		return artistName;
+	}
+
+	public void setArtistName(String artistName) {
+		this.artistName = artistName;
+	}
+
 	@Override
 	public String toString() {
-		return "StreamingRecord [endTime=" + endTime + ", artistName=" + artistName + ", trackName=" + trackName
-				+ ", msPlayed=" + msPlayed + "]";
+		return "StreamingRecord [endTime=" + endTime + ", trackName=" + trackName + ", msPlayed=" + msPlayed
+				+ ", artistName=" + artistName + "]";
 	}
 	
 	
 	
 	
-	
 }
-//{
-//    "endTime" : "2021-04-15 13:46",
-//    "artistName" : "Mike Posner",
-//    "trackName" : "I Took A Pill In Ibiza - Seeb Remix",
-//    "msPlayed" : 128912
-//  }
