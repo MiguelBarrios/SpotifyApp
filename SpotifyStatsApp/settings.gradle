@@ -1,1 +1,3 @@
 rootProject.name = 'SpotifyStatsApp'
+includeFlat 'SpotifyStatsAppJPA'
+

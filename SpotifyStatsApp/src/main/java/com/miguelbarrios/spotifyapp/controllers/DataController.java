@@ -3,6 +3,7 @@ package com.miguelbarrios.spotifyapp.controllers;
 import java.util.List;
 import java.util.Map;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -12,17 +13,28 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.miguelbarrios.spotifyapp.MusicStats;
 import com.miguelbarrios.spotifyapp.entities.Album;
 import com.miguelbarrios.spotifyapp.entities.Show;
+import com.miguelbarrios.spotifyapp.entities.StreamingHistory;
 import com.miguelbarrios.spotifyapp.entities.StreamingRecord;
 import com.miguelbarrios.spotifyapp.entities.Track;
+import com.miguelbarrios.spotifyapp.services.StreamingHistoryService;
 import com.miguelbarrios.spotifyapp.utilities.Utilities;
 
 @RestController
 @RequestMapping("api")
 public class DataController {
+	
+	@Autowired
+	private StreamingHistoryService historyService;
 
 	@GetMapping("ping")
 	public  String test() {
 		return "success test";
+	}
+	
+	@GetMapping("uploadstreaminghistory")
+	public StreamingHistory upload(@RequestBody List<StreamingRecord> records) {
+		
+		return historyService.findById(1);
 	}
 	
 	@GetMapping("streaminghistoryupload")
