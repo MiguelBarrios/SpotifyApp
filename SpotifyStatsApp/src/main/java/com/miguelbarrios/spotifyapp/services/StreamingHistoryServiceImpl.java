@@ -9,9 +9,8 @@ import org.springframework.stereotype.Service;
 import com.miguelbarrios.spotifyapp.entities.Artist;
 import com.miguelbarrios.spotifyapp.entities.StreamingHistory;
 import com.miguelbarrios.spotifyapp.entities.StreamingRecord;
-import com.miguelbarrios.spotifyapp.repositories.ArtistRepository;
+import com.miguelbarrios.spotifyapp.entities.User;
 import com.miguelbarrios.spotifyapp.repositories.StreamingHistoryRepository;
-import com.miguelbarrios.spotifyapp.repositories.UserRepository;
 
 @Service
 public class StreamingHistoryServiceImpl implements StreamingHistoryService {
@@ -19,11 +18,11 @@ public class StreamingHistoryServiceImpl implements StreamingHistoryService {
 	@Autowired
 	private StreamingHistoryRepository historyRepo;
 	
-	@Autowired 
-	private ArtistRepository artistRepo;
+	@Autowired
+	private ArtistService artistService;
 	
-	@Autowired 
-	private UserRepository userRepo;
+	@Autowired
+	private UserService userService;
 	
 	@Override
 	public StreamingHistory findById(int id) {
@@ -34,8 +33,16 @@ public class StreamingHistoryServiceImpl implements StreamingHistoryService {
 	}
 	
 	@Override
-	public List<StreamingHistory> uploadStreamingHistory(List<StreamingRecord> history) {
+	public List<StreamingHistory> uploadStreamingHistory(List<StreamingRecord> history, User user) {
 		StreamingRecord cur = history.get(2);
+		Artist artist = artistService.findByUsername(cur.getArtistName());
+		StreamingHistory record = new StreamingHistory();
+		record.setArtist(artist);
+		record.setUser(user);
+		record.setEndTime(cur.getEndTime());
+		record.setMsPlayed(cur.getMsPlayed());
+		record.setTrackName(cur.getTrackName());
+		System.out.println(record);
 		
 		return null;
 	}

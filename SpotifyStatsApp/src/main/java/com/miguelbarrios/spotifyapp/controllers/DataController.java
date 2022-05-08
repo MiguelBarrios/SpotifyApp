@@ -16,7 +16,9 @@ import com.miguelbarrios.spotifyapp.entities.Show;
 import com.miguelbarrios.spotifyapp.entities.StreamingHistory;
 import com.miguelbarrios.spotifyapp.entities.StreamingRecord;
 import com.miguelbarrios.spotifyapp.entities.Track;
+import com.miguelbarrios.spotifyapp.entities.User;
 import com.miguelbarrios.spotifyapp.services.StreamingHistoryService;
+import com.miguelbarrios.spotifyapp.services.UserService;
 import com.miguelbarrios.spotifyapp.utilities.Utilities;
 
 @RestController
@@ -25,16 +27,21 @@ public class DataController {
 	
 	@Autowired
 	private StreamingHistoryService historyService;
+	
+	@Autowired 
+	private UserService userService;
 
 	@GetMapping("ping")
 	public  String test() {
 		return "success test";
 	}
 	
+	
 	@GetMapping("uploadstreaminghistory")
 	public StreamingHistory upload(@RequestBody List<StreamingRecord> records) {
 		
-		historyService.uploadStreamingHistory(records);
+		User user = userService.findByUserName("lochnessbarrios");
+		historyService.uploadStreamingHistory(records, user);
 		return null;
 	}
 	
