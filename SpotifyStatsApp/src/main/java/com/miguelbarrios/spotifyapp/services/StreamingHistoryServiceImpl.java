@@ -1,7 +1,9 @@
 package com.miguelbarrios.spotifyapp.services;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -36,14 +38,22 @@ public class StreamingHistoryServiceImpl implements StreamingHistoryService {
 	@Override
 	public List<StreamingHistory> uploadStreamingHistory(List<StreamingRecord> history, User user) {
 		
+		Map<String, Artist> artistMap = new HashMap<>();
 		List<StreamingHistory> finRecords = new ArrayList<>();
 		System.out.println("***Saving artists");
 		for(StreamingRecord record : history) {
-			Artist artist = artistService.findByUsername(record.getArtistName());
+			Artist artist = artistService.findByName(record.getArtistName());
 			if(artist == null) {
-				Artist tmp = new Artist();
-				tmp.setArtistName(record.getArtistName());
-				artist = artistService.save(tmp);
+				String name = record.getArtistName().toUpperCase();
+				if(artistMap.containsKey(name)) {
+					artist = artistMap.get(name);
+				}
+				else {
+					artist = new Artist();
+					artist.setArtistName(name);
+					artistMap.put(name, artist);
+				}
+				//artist = artistService.save(artist);
 			}
 		
 			StreamingHistory streaminghistoryRecord = new StreamingHistory();
@@ -54,12 +64,8 @@ public class StreamingHistoryServiceImpl implements StreamingHistoryService {
 			streaminghistoryRecord.setTrackName(record.getTrackName());			
 			finRecords.add(streaminghistoryRecord);
 		}
-		
-		System.out.println("*** Saving records");
-		historyRepo.saveAllAndFlush(finRecords);
-
-		
-		
+		artistService.saveAll(artistMap.values());
+		historyRepo.saveAllAndFlush(finRecords);		
 		return finRecords;
 	}
 }

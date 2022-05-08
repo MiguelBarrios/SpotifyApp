@@ -4,9 +4,9 @@
 		<provider>org.hibernate.jpa.HibernatePersistenceProvider</provider>
 
 		<!-- Begin Entities Here -->
-			<class>com.miguelbarrios.spotifyapp.User</class>
-			<class>com.miguelbarrios.spotifyapp.Artist</class>
-			<class>com.miguelbarrios.spotifyapp.StreamingHistory</class>	
+			<class>com.miguelbarrios.spotifyapp.entities.User</class>
+			<class>com.miguelbarrios.spotifyapp.entities.Artist</class>
+			<class>com.miguelbarrios.spotifyapp.entities.StreamingHistory</class>	
 			
 		<!-- Entities Entities Here -->
 

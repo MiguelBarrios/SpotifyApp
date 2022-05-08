@@ -1,6 +1,8 @@
 package com.miguelbarrios.spotifyapp.entities;
 
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
 
@@ -8,11 +10,22 @@ import javax.persistence.Id;
 public class User {
 
 	@Id
+	@GeneratedValue(strategy=GenerationType.IDENTITY)
+	private int id;
+	
 	private String username;
 	
 	private String email;
 	
 	public User() {}
+
+	public int getId() {
+		return id;
+	}
+
+	public void setId(int id) {
+		this.id = id;
+	}
 
 	public String getUsername() {
 		return username;
@@ -32,6 +45,8 @@ public class User {
 
 	@Override
 	public String toString() {
-		return "User [username=" + username + ", email=" + email + "]";
+		return "User [id=" + id + ", username=" + username + ", email=" + email + "]";
 	}
+
+	
 }

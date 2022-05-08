@@ -31,7 +31,7 @@ class ArtistTest {
 	@BeforeEach
 	void setUp() throws Exception {
 	    em = emf.createEntityManager();
-	    artist = em.find(Artist.class, "Drake");
+	    artist = em.find(Artist.class,1);
 	}
 
 	@AfterEach
@@ -43,6 +43,7 @@ class ArtistTest {
 	@Test
 	void test1() {
 		assertNotNull(artist);
+		assertEquals("Paramore", artist.getArtistName());
 		
 	}
 

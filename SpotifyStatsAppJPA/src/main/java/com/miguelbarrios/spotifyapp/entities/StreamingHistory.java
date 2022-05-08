@@ -33,11 +33,11 @@ public class StreamingHistory {
 	private long msPlayed;
 	
 	@ManyToOne
-	@JoinColumn(name="artist_name")
+	@JoinColumn(name="artist_id")
 	private Artist artist;
 	
 	@ManyToOne
-	@JoinColumn(name="user_username")
+	@JoinColumn(name="user_id")
 	private User user;
 	
 	public StreamingHistory() {
