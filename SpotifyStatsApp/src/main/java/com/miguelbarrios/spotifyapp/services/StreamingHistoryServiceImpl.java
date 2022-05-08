@@ -36,11 +36,10 @@ public class StreamingHistoryServiceImpl implements StreamingHistoryService {
 	}
 	
 	@Override
-	public List<StreamingHistory> uploadStreamingHistory(List<StreamingRecord> history, User user) {
+	public boolean uploadStreamingHistory(List<StreamingRecord> history, User user) {
 		
 		Map<String, Artist> artistMap = new HashMap<>();
 		List<StreamingHistory> finRecords = new ArrayList<>();
-		System.out.println("***Saving artists");
 		for(StreamingRecord record : history) {
 			Artist artist = artistService.findByName(record.getArtistName());
 			if(artist == null) {
@@ -53,7 +52,6 @@ public class StreamingHistoryServiceImpl implements StreamingHistoryService {
 					artist.setArtistName(name);
 					artistMap.put(name, artist);
 				}
-				//artist = artistService.save(artist);
 			}
 		
 			StreamingHistory streaminghistoryRecord = new StreamingHistory();
@@ -64,8 +62,16 @@ public class StreamingHistoryServiceImpl implements StreamingHistoryService {
 			streaminghistoryRecord.setTrackName(record.getTrackName());			
 			finRecords.add(streaminghistoryRecord);
 		}
-		artistService.saveAll(artistMap.values());
-		historyRepo.saveAllAndFlush(finRecords);		
-		return finRecords;
+		try {
+			//TODO: put in same method so if one fails the other wont execute
+			artistService.saveAll(artistMap.values());
+			historyRepo.saveAllAndFlush(finRecords);
+			return true;
+		}
+		catch(Exception e){
+			e.printStackTrace();
+			return false;
+		}
+	
 	}
 }

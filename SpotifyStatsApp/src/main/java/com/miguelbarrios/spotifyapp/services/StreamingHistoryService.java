@@ -10,6 +10,6 @@ public interface StreamingHistoryService {
 
 	StreamingHistory findById(int id);
 
-	List<StreamingHistory> uploadStreamingHistory(List<StreamingRecord> history, User user);
+	boolean uploadStreamingHistory(List<StreamingRecord> history, User user);
 
 }

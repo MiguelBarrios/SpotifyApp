@@ -3,6 +3,8 @@ package com.miguelbarrios.spotifyapp.controllers;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.http.HttpServletResponse;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -13,10 +15,10 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.miguelbarrios.spotifyapp.MusicStats;
 import com.miguelbarrios.spotifyapp.entities.Album;
 import com.miguelbarrios.spotifyapp.entities.Show;
-import com.miguelbarrios.spotifyapp.entities.StreamingHistory;
 import com.miguelbarrios.spotifyapp.entities.StreamingRecord;
 import com.miguelbarrios.spotifyapp.entities.Track;
 import com.miguelbarrios.spotifyapp.entities.User;
+import com.miguelbarrios.spotifyapp.services.StatisticsService;
 import com.miguelbarrios.spotifyapp.services.StreamingHistoryService;
 import com.miguelbarrios.spotifyapp.services.UserService;
 import com.miguelbarrios.spotifyapp.utilities.Utilities;
@@ -29,6 +31,9 @@ public class DataController {
 	private StreamingHistoryService historyService;
 	
 	@Autowired 
+	private StatisticsService statsService;
+	
+	@Autowired 
 	private UserService userService;
 
 	@GetMapping("ping")
@@ -36,13 +41,24 @@ public class DataController {
 		return "success test";
 	}
 	
+	//TODO: tmp
+	@GetMapping("stats")
+	public void genStats() {
+		User user = userService.findByUserName("lochnessbarrios");
+		statsService.getTotalTimeOnSpotify();
+
+	}
+	
 	
 	@GetMapping("uploadstreaminghistory")
-	public List<StreamingHistory> upload(@RequestBody List<StreamingRecord> records) {
+	public void upload(@RequestBody List<StreamingRecord> records, HttpServletResponse resp) {
 		
 		User user = userService.findByUserName("lochnessbarrios");
-		List<StreamingHistory> history = historyService.uploadStreamingHistory(records, user);
-		return history;
+		boolean didUpload = historyService.uploadStreamingHistory(records, user);
+		if(!didUpload) {
+			resp.setStatus(400);
+		}
+
 	}
 	
 	
