@@ -43,9 +43,10 @@ public class DataController {
 	
 	//TODO: tmp
 	@GetMapping("stats")
-	public void genStats() {
+	public List<Object[]> genStats() {
 		User user = userService.findByUserName("lochnessbarrios");
-		statsService.getTotalTimeOnSpotify();
+		//statsService.getMostListenToArtists(25);
+		return statsService.getMostListenToItems(25);
 
 	}
 	

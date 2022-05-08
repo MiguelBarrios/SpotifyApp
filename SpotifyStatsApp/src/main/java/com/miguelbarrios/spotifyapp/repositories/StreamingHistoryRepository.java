@@ -9,8 +9,14 @@ import com.miguelbarrios.spotifyapp.entities.StreamingHistory;
 
 public interface StreamingHistoryRepository extends JpaRepository<StreamingHistory, Integer>{
 	
-	@Query("SELECT SUM(sh.msPlayed), sh.artist.artistName FROM StreamingHistory sh GROUP BY sh.artist.artistName" +
-	       " ORDER BY SUM(sh.msPlayed)")
-	List<Object[]> getMostListenTo();
+	@Query("SELECT SUM(sh.msPlayed), sh.artist.artistName FROM StreamingHistory sh " + 
+	       "GROUP BY sh.artist.artistName " +
+	       "ORDER BY SUM(sh.msPlayed)")
+	List<Object[]> getMostListenToArtists();
+	
+	@Query("SELECT SUM(sh.msPlayed), sh.artist.artistName, sh.trackName FROM StreamingHistory sh " + 
+		       "GROUP BY sh.trackName " +
+		       "ORDER BY SUM(sh.msPlayed)")
+	List<Object[]> getMostListenToItems();
 
 }

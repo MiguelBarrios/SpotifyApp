@@ -15,16 +15,24 @@ public class StatisticsServiceImpl implements StatisticsService {
 	private StreamingHistoryRepository repo;
 	
 	@Override
-	public void getTotalTimeOnSpotify() {
-		List<Object[]> res = repo.getMostListenTo();
+	public List<Object[]> getMostListenToArtists(int n) {
+		List<Object[]> res = repo.getMostListenToArtists();
 		for(Object[] cur : res) {
 			System.out.println(Arrays.toString(cur));
 		}
+		return res;
 		
 	}
 	
-	public void getTop25Artist() {
-		
+	@Override
+	public List<Object[]> getMostListenToItems(int n) {
+		List<Object[]> res = repo.getMostListenToItems();
+		for(Object[] cur : res) {
+			System.out.println(Arrays.toString(cur));
+		}
+		return res.subList(res.size() - (n + 1), res.size());
 	}
+	
+	
 	
 }

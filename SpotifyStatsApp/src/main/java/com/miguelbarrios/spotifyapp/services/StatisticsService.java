@@ -1,7 +1,11 @@
 package com.miguelbarrios.spotifyapp.services;
 
+import java.util.List;
+
 public interface StatisticsService {
 
-	void getTotalTimeOnSpotify();
+	List<Object[]> getMostListenToArtists(int n);
+
+	List<Object[]> getMostListenToItems(int n);
 
 }
