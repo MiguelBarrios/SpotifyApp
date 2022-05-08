@@ -19,4 +19,9 @@ public class ArtistServiceImpl implements ArtistService {
 		Optional<Artist> option = artistRepo.findById(username);
 		return option.isPresent() ? option.get() : null;
 	}
+	
+	@Override
+	public Artist save(Artist artist) {
+		return artistRepo.saveAndFlush(artist);
+	}
 }

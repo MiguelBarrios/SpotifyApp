@@ -1,5 +1,6 @@
 package com.miguelbarrios.spotifyapp.services;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -34,16 +35,31 @@ public class StreamingHistoryServiceImpl implements StreamingHistoryService {
 	
 	@Override
 	public List<StreamingHistory> uploadStreamingHistory(List<StreamingRecord> history, User user) {
-		StreamingRecord cur = history.get(2);
-		Artist artist = artistService.findByUsername(cur.getArtistName());
-		StreamingHistory record = new StreamingHistory();
-		record.setArtist(artist);
-		record.setUser(user);
-		record.setEndTime(cur.getEndTime());
-		record.setMsPlayed(cur.getMsPlayed());
-		record.setTrackName(cur.getTrackName());
-		System.out.println(record);
 		
-		return null;
+		List<StreamingHistory> finRecords = new ArrayList<>();
+		System.out.println("***Saving artists");
+		for(StreamingRecord record : history) {
+			Artist artist = artistService.findByUsername(record.getArtistName());
+			if(artist == null) {
+				Artist tmp = new Artist();
+				tmp.setArtistName(record.getArtistName());
+				artist = artistService.save(tmp);
+			}
+		
+			StreamingHistory streaminghistoryRecord = new StreamingHistory();
+			streaminghistoryRecord.setArtist(artist);
+			streaminghistoryRecord.setUser(user);
+			streaminghistoryRecord.setEndTime(record.getEndTime());
+			streaminghistoryRecord.setMsPlayed(record.getMsPlayed());
+			streaminghistoryRecord.setTrackName(record.getTrackName());			
+			finRecords.add(streaminghistoryRecord);
+		}
+		
+		System.out.println("*** Saving records");
+		historyRepo.saveAllAndFlush(finRecords);
+
+		
+		
+		return finRecords;
 	}
 }

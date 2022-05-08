@@ -9,5 +9,7 @@ import com.miguelbarrios.spotifyapp.repositories.ArtistRepository;
 public interface ArtistService {
 
 	Artist findByUsername(String username);
+
+	Artist save(Artist artist);
 	
 }

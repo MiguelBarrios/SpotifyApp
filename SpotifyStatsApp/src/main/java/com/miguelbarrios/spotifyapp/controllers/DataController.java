@@ -38,11 +38,11 @@ public class DataController {
 	
 	
 	@GetMapping("uploadstreaminghistory")
-	public StreamingHistory upload(@RequestBody List<StreamingRecord> records) {
+	public List<StreamingHistory> upload(@RequestBody List<StreamingRecord> records) {
 		
 		User user = userService.findByUserName("lochnessbarrios");
-		historyService.uploadStreamingHistory(records, user);
-		return null;
+		List<StreamingHistory> history = historyService.uploadStreamingHistory(records, user);
+		return history;
 	}
 	
 	
