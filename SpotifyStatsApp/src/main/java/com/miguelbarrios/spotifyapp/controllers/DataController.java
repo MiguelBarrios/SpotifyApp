@@ -46,7 +46,9 @@ public class DataController {
 	public List<Object[]> genStats() {
 		User user = userService.findByUserName("lochnessbarrios");
 		//statsService.getMostListenToArtists(25);
-		return statsService.getMostListenToItems(25);
+		//return statsService.getMostListenToItems(25);
+		statsService.mostRepeatedPlayback(100000);
+		return null;
 
 	}
 	

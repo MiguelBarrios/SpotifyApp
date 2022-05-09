@@ -8,4 +8,6 @@ public interface StatisticsService {
 
 	List<Object[]> getMostListenToItems(int n);
 
+	void mostRepeatedPlayback(long threshold);
+
 }
